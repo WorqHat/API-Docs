@@ -100,8 +100,8 @@
     {
       "group": "Policies",
       "pages": [
-        "policies/privacy-policy",
         "policies/terms-of-service",
+        "policies/privacy-policy",
         "policies/acceptable-use-policy",
         "policies/data-usage-policy",
         "policies/bugs-disclosure-policy"
