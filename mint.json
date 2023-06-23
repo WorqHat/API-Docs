@@ -96,8 +96,17 @@
           ]
         }
       ]
+    },
+    {
+      "group": "Policies",
+      "pages": [
+        "policies/privacy-policy",
+        "policies/terms-of-service",
+        "policies/acceptable-use-policy",
+        "policies/data-usage-policy",
+        "policies/bugs-disclosure-policy"
+      ]
     }
-
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/worqhat",
@@ -105,5 +114,5 @@
     "github": "https://github.com/worqhat",
     "linkedin": "https://www.linkedin.com/company/worqhat"
   },
-  "backgroundImage": "/background.png"
+  "backgroundImage": "/images/gradient.png"
 }
