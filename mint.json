@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "WorqHat Developers",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -13,47 +13,97 @@
   },
   "topbarLinks": [
     {
-      "name": "Documentation",
-      "url": "https://mintlify.com/docs"
+      "name": "WorqHat",
+      "url": "https://worqhat.com"
+    },
+    {
+      "name": "Contact",
+      "url": "https://worqhat.com/contact-us"
+    }
+  ],
+  "topAnchor": {
+    "name": "Home",
+    "icon": "building"
+  },
+  "anchors": [
+    {
+      "name": "Changelogs",
+      "icon": "code-compare",
+      "url": "https://updates.worqhat.com/"
+    },
+    {
+      "name": "Community",
+      "icon": "screen-users",
+      "url": "https://discord.com/invite/KHh9mguKBx"
+    },
+    {
+      "name": "Academy",
+      "icon": "pencil",
+      "url": "https://learn.worqhat.com"
+    },
+    {
+      "name": "Contact us",
+      "icon": "envelope",
+      "url": "https://worqhat.com/contact-us"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://app.worqhat.com"
   },
   "tabs": [
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Learner Academy",
+      "url": "learner-academy"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Getting Started",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "introduction",
+        "quickstart",
+        "WorqHat AI",
+        "Rate Limits"
+      ]
+    },
+    {
+      "group": "AI Models",
+      "pages": [
+        "ai-models/AI-for-Content",
+        "ai-models/AI-for-Search",
+        "ai-models/AI-for-Images",
+        "ai-models/AI-for-Files",
+        "ai-models/AI-for-Speech",
+        "ai-models/AI-for-Security"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        {
+          "group": "AI for Content",
+          "pages": [
+            "api-reference/ai-content/endpoint/get",
+            "api-reference/ai-content/endpoint/create",
+            "api-reference/ai-content/endpoint/update",
+            "api-reference/ai-content/endpoint/delete"
+          ]
+        }
       ]
     }
+
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/worqhat",
+    "instagram": "https://instagram.com/worqhat",
+    "github": "https://github.com/worqhat",
+    "linkedin": "https://www.linkedin.com/company/worqhat"
   },
   "backgroundImage": "/background.png"
 }
