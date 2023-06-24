@@ -1,0 +1,638 @@
+---
+title: "Natural Language to Code Translator with WorqHat AI"
+description: "Build a Natural Language to Code Translator with WorqHat AI Models"
+---
+
+Hey there, fam! Welcome to WorqHat, where we're about to embark on an exciting course that will take your AI skills to the next level!
+
+In this course, we'll be diving into the fascinating world of AI bots, specifically focusing on building our very own AI bot using the incredible AiCon V2 Model from WorqHat AI. And let me tell you, this bot is not your average bot. It's a bot that can transform your thoughts into actual code in any programming language you desire! Yes, you heard it right.
+
+Imagine being able to express your ideas or describe the code you want to generate, either in Hindi or English, and have the bot magically generate the code for you in your preferred programming language. It's like having your own personal coding assistant!
+
+This project is significant because it will not only equip you with the knowledge and skills to build AI-based projects but also give you a fundamental understanding of how to leverage the latest APIs provided by WorqHat. Trust me, this is going to be a cool and game-changing experience!
+
+Now, let's take a sneak peek into the world of the one and only Code Translator, a project that will revolutionize the way you approach coding. Get ready to be amazed!
+
+<Frame caption="Project Outcome">
+  <img src="/images/text-code.png" />
+</Frame>
+
+But don't take my word for it, you gotta try it out for yourself. We've got a live code translator on this [website](https://text-to-code-with-worqhat-ai.vercel.app/), that's already causing a stir. People can't get enough of it! So, before you even start this course, go check it out and see what all the fuss is about.So, are you ready to step up and take on the challenge? Let's do this!
+
+<Card title="View Live Project" icon="browser" iconType="duotone" color="#ea5a0c"
+      href="https://text-to-code-with-worqhat-ai.vercel.app/">
+</Card>
+
+### What you'll learn
+
+We will:
+1. Cover some super cool basic understanding of AI, WorqHatAI, and AiCon models (Text Generation
+Models).
+2. We will set up the development environment with WorqHatAI, NodeJS, and NextJS
+3. We will write text completion models in NodeJS using amazing WorqHat AiCon V2 models.
+4. We will build a responsive front-end app in NextJS and back-end that uses WorqHat AI API and
+interacts
+with front-end, then we will run it locally.
+
+### Prerequisites
+
+Learning new technologies becomes easier when you have some prior knowledge. Before diving into WorqHatAI and AI model development, we recommend brushing up on the following areas:
+
+1. Programming Knowledge: Having a basic understanding of programming is essential to start experimenting with advanced languages. While not mandatory, knowledge of the JavaScript programming language is considered a plus.
+2. Critical Thinking: To grasp the complex and abstract concepts involved in WorqHat APIs and AI
+development, solid critical thinking skills are beneficial. Developing your ability to analyze, evaluate, and solve problems will greatly aid your learning process.
+
+However, don't worry if you don't possess all the prerequisite knowledge beforehand. You can still learn API and AI model development without prior expertise. It's just that having some background knowledge will make your learning experience smoother and more enjoyable.
+
+### House Rules
+To ensure a productive learning environment, we kindly request that you adhere to the following house rules:
+
+* **Complete Assignments**: It's important to complete your assignments thoroughly and in a timely manner. Engaging with the course material actively will enhance your understanding and proficiency.
+
+* **Join Discord Server**: We highly encourage you to join our Discord server, where you can
+connect with fellow learners, ask relevant questions, and engage in discussions. The server
+provides a supportive community that fosters learning and collaboration. [WorqHat's Discord community](https://discord.com/invite/KHh9mguKBx)
+
+<CardGroup cols={2}>
+  <Card title="Join Discord Community" icon="discord" color="#5865F2"
+        href="https://discord.com/invite/KHh9mguKBx">
+  </Card>
+</CardGroup>
+
+* **Maintain a Positive Attitude**: A positive mindset goes a long way in learning. Stay happy, open-minded, and optimistic throughout your journey. Embrace challenges as opportunities for growth and be supportive of your fellow learners.
+
+We are excited to have you on this learning adventure with us! Let's create an enriching and empowering environment where we can learn and grow together.
+
+## Unleash the Power of WorqHat AI
+
+This is the Video Tutorial for the Entire Project. You can choose to follow it directly from
+here, or you can follow the written tutorial below. The Video has been broken into 2 parts for
+your convenience and to make it easier to follow.
+
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/o9e12WbKrd8"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## AI, WorqHatAI, and AiCon Models
+
+In the realm of artificial intelligence (AI) and machine learning, machines strive to simulate human intelligence, while machine learning focuses on enabling machines to learn and improve autonomously without explicit programming. In this context, WorqHat emerges as a groundbreaking no-code platform builder, harnessing the potential of Generative AI to create custom apps, workflows, and automation solutions tailored to businesses of all sizes.
+
+WorqHat empowers solopreneurs, startups, and medium-sized enterprises by automating complex workflows, fostering seamless team collaboration, and enhancing overall productivity. By automating time-consuming tasks, WorqHat allows businesses to thrive and focus on core operations.
+
+At the heart of WorqHat lies the advanced deep learning model known as AiCon (AI Content Optimization Network). This remarkable language model has undergone extensive training on vast volumes of data, enabling it to comprehend natural language with unparalleled precision and exceptional speed. The result? Faster and more streamlined platform building processes.
+
+The WorqHatAI API serves as a powerful tool, providing developers with access to WorqHat's cutting-edge AI models and the ability to train their own models. WorqHat's AiCon models are generative language models developed to generate coherent text based on substantial data inputs. AiCon V2, the fastest language model offered by WorqHat, boasts self-training capabilities and can handle requests involving up to 100,000 words in a single go. For tasks requiring logical thinking and increased creativity, AiCon V3, a larger and more advanced model, comes into play.
+
+To utilize WorqHat's API, developers must obtain an API key and an ORG key. These keys serve as access credentials and are essential for writing NodeJS programs that interact with WorqHat's API.
+
+Before diving into writing your first program using NodeJS and the WorqHat API, let's take a moment to understand the concept of an API key and how you can generate one to facilitate seamless integration with WorqHat's powerful services.
+
+## WorqHat API Key
+
+In order to use the WorqHat API, you must first obtain an API key and the ORG Key. We offer a
+generous free tier that gets reset every month. You can also upgrade to a paid plan to get more
+API calls and more features.
+
+This key serves
+as a unique identifier that allows you to access WorqHat's API services. To generate an API key, follow the steps below:
+
+1. Go to the [WorqHat API](https://worqhat.com) website and click on the **Get Started** button.
+2. Join the WorqHat community by entering your email address and clicking on the **Join Now**
+button. You can also sign up using your Google or Microsoft account.
+3. Once you've signed up, you'll be redirected to the dashboard. Click on the **Create a
+Workspace** button on the left-hand side of the screen.
+4. Add a name for your workspace and click on the **Create Workspace** button. We use workspaces
+to organize your projects and keep them separate from each other. This allows you to manage your projects more efficiently.
+5. Once you've created a workspace, you'll be redirected to the Workspace Signin page. Sign in to
+your workspace using your email address and password that you have set up during the signup process.
+6. After signing in, you'll be redirected to the dashboard. Click on the **Try Now** button on
+the **Build Your Own Applications with our API** card.
+7. You'll be redirected to the API page. You can find your API key and ORG key on the right-hand
+side of the screen. Click on the **Copy** button to copy the keys to your clipboard.
+8. Also, make sure to add your Domain name to the **Allowed Domains** section. This will allow
+you to make API calls from your domain. For example, if you're making API calls from a website
+hosted on `https://example.com`, you'll need to add `example.com` to the **Allowed Domains** section.
+
+Here's an example of what the API key & ORG key looks like:
+
+<CodeGroup>
+
+  ```bash API Key
+  var myHeaders = new Headers();
+  myHeaders.append("x-org-key",
+  "U2FsdGVkX1+DMFucNFhZT7b3KTDTPLvjKkfWV0XY+jK2tA44wGn+M+KTC1V/eAOX");
+  ```
+  ```bash ORG Key
+  var myHeaders = new Headers();
+  myHeaders.append("x-api-key",
+  "U2FsdGVkX1/hx889OFajtqRp5TdESHHakovIb3Qq52kqqy/zFhA9MlNSjghXMUzbOHEr9QhoOAJKmKXKA6Ol8A==");
+  ```
+</CodeGroup>
+
+<iframe className="mt-6 w-full h-[400px]" src="https://www.tella.
+tv/video/clizvoigw00k30fi4gq6i1bn9/embed?
+b=0&title=1&a=1&loop=1&autoPlay=true&t=0&muted=1"></iframe>
+
+
+## Quick Start with WorqHatAI API
+
+Now that you have your API key and ORG key, you can start using the WorqHat API. In this section,
+we'll walk you through the process of writing your first NodeJS program using the WorqHat API.
+
+### Step 1: Create a NodeJS App
+
+1. First of all, install NodeJs in your system. Head over to https://nodejs.org/en/download and
+follow the instructions to install it.
+2. Head over to your terminal and create a new directory for your NodeJs app:
+
+```bash [Terminal]
+  mkdir my-nodejs-app
+```
+
+3. Navigate to the newly created directory:
+
+  ```bash [Terminal]
+  cd my-nodejs-app
+  ```
+
+4. Initialize a new NodeJs app and accept the default options:
+
+  ```bash [Terminal]
+  npm init -y
+  ```
+
+### Step 2: Install Dependencies
+
+1. Install the `request` package. The `request` package allows you to make HTTP requests from your NodeJs app:
+
+  ```bash [Terminal]
+  npm install request
+  ```
+
+2. Install the `dotenv` package. The `dotenv` package allows you to load environment variables
+from a `.env` file. This is useful when you want to keep your API keys and other sensitive information out of your codebase:
+
+  ```bash [Terminal]
+  npm install dotenv
+  ```
+
+### Step 3: Create the files
+
+1. Create a new file called `index.js` and `.env` in the root directory of your NodeJs app:
+
+  ```bash [Terminal]
+  touch index.js .env
+  ```
+
+<iframe className="mt-6 w-full h-[400px]"
+        src="https://www.tella.tv/video/clizx2ezq02090fl3fhxg8qm5/embed?b=0&title=1&a=1&loop=1&autoPlay=true&t=0&muted=1"></iframe>
+
+2. After running the Commands, the directory structure should look like this:
+<Frame caption="Directory Structure">
+  <img src="/images/text-code-fs.png" />
+</Frame>
+
+Now, let’s move on to the coding part.
+
+### Step 4: Write the code
+
+1. Open the `.env` file and add the following code:
+
+  ```bash .env
+  WORQHAT_API_KEY=YOUR_API_KEY_GOES_HERE
+  WORQHAT_ORG_KEY=YOUR_ORG_KEY_GOES_HERE
+  ```
+
+2. Open the `index.js` file and add the following code. We are going to write a simple program
+that will make a POST request to the WorqHat API with the Question/Command and print the
+response to the console:
+
+```javascript index.js
+// Import the Request library to make requests to the WorqHat API
+const request = require("request");
+// Load the WorqHat AI API key from a file named ".env"
+require("dotenv").config();
+// Store the WorqHat API & ORG key in a variable for later use
+const worqhatApiKey = process.env.WORQHAT_API_KEY;
+const worqhatOrgKey = process.env.WORQHAT_ORG_KEY;
+
+// Set the URL for the API request
+const url = "https://api.worqhat.com/api/ai/content/v2";
+
+// Set the required headers for the API request
+const headers = {
+    "x-api-key": worqhatApiKey, // Replace with your API key
+    "x-org-key": worqhatOrgKey, // Replace with your ORG key
+    "Content-Type": "application/json",
+};
+
+// Prepare the request body in JSON format
+const raw = JSON.stringify({
+    question: "Hi, tell me about you", // The question or command for the AI model
+    preserve_history: false, // Whether to preserve conversation history for the model. Set to false for one-off questions. Visit documentation for more info.
+    randomness: 0.4, // Level of randomness for AI model response (0 to 1)
+});
+
+// Configure the options for the API request
+const requestOptions = {
+    url: url,
+    method: "POST",
+    headers: headers,
+    body: raw,
+};
+
+// Send the API request
+request(requestOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+        console.log(body); // Print the response body if the request is successful
+    } else {
+        console.log("Error:", error); // Print the error message if the request fails
+    }
+});
+```
+
+### Step 5: Let's break down the code and understand what's going on
+
+1. First, we import the `request` package to make HTTP requests from our NodeJs app:
+
+```javascript index.js
+const request = require("request");
+```
+
+2. Next, we import the `dotenv` package to load environment variables from a `.env` file:
+
+```javascript index.js
+require("dotenv").config();
+```
+
+3. Next, we store the WorqHat API key and ORG key in variables for later use:
+
+```javascript index.js
+const worqhatApiKey = process.env.WORQHAT_API_KEY;
+const worqhatOrgKey = process.env.WORQHAT_ORG_KEY;
+```
+
+4. Next, we set the URL for the API request:
+
+```javascript index.js
+const url = "https://api.worqhat.com/api/ai/content/v2";
+```
+
+5. Next, we set the required headers for the API request:
+
+```javascript index.js
+const headers = {
+   "x-api-key": worqhatApiKey, // Replace with your API key
+   "x-org-key": worqhatOrgKey, // Replace with your ORG key
+   "Content-Type": "application/json",
+};
+```
+
+6. Next, we prepare the request body in JSON format. This is where we specify the question or
+command for the AI model and send the request to the API to get the response:
+
+```javascript index.js
+const raw = JSON.stringify({
+   question: "Hi, tell me about you", // The question or command for the AI model
+   preserve_history: false, // Whether to preserve conversation history for the model. Set to false for one-off questions. Visit documentation for more info.
+   randomness: 0.4, // Level of randomness for AI model response (0 to 1)
+});
+```
+
+This block of code is where the magic happens. We are sending a ``POST`` request to the WorqHat API,
+and we are passing the ``question/command`` to the API. The API will then process the question/command
+and return the ``response``.
+
+* **question**: The question or command for the AI model (required)
+* **preserve_history**: Whether to preserve conversation history for the model. Set to false for
+one-off questions. You can also pass in custom training data and conversation history in the for
+of Key-Value Pairs. Visit [documentation](https://devs.worqhat.com/WorqHatAPIs/AiText/aiconV2#sample-code) for more info.
+* **randomness**: Level of randomness for AI model response (0 to 1). The higher the randomness, the
+more varied the response will be.
+
+7. Next, we configure the options for the API request:
+
+```javascript index.js
+const requestOptions = {
+   url: url,
+   method: "POST",
+   headers: headers,
+   body: raw,
+};
+```
+
+This is where we specify the URL, HTTP method, headers, and request body that we have prepared
+and send the request to the WorqHat API  to process the question/command and return the response.
+
+8. Finally, we send the API request:
+
+```javascript index.js
+request(requestOptions, (error, response, body) => {
+   if (!error && response.statusCode === 200) {
+       console.log(body); // Print the response body if the request is successful
+   } else {
+       console.log("Error:", error); // Print the error message if the request fails
+   }
+});
+```
+
+This is where we send the API request to the WorqHat API and get the response. We are using the
+`request` package to send the request. We are also checking if the request is successful or not
+and printing the response body or error message accordingly.
+
+### Step 6: Run the code
+
+Now that we have written the code, let's run it and see what happens. To run the code, open the
+terminal and run the following command:
+
+```bash Terminal
+node index.js
+```
+
+You should see the following output in the terminal:
+
+```bash Terminal
+{
+  "id": "1d9affa3-deac-49ee-87e7-a8d0397826fb",
+  "status": "success",
+  "timestamp": 1683057609614,
+  "content": "I was built by WorqHat, a Generative AI Based No-Code Platform Builder based on the Advanced LLM Model AiCon. It's a predictive technology that is designed to make building applications faster and easier. Is there anything you need help with?",
+  "processing_count": 58
+}
+```
+
+This is the response from the WorqHat API. The response contains the following information:
+
+| Field | Description | Example |
+| --- | --- | --- |
+| ``id`` | The unique ID of the response | 1d9affa3-deac-49ee-87e7-a8d0397826fb |
+| ``status`` | The status of the response | success |
+| ``timestamp`` | The timestamp of the response | 1683057609614 |
+| ``content`` | The response from the AI model | I was built by WorqHat, a Generative AI Based No-Code Platform Builder based on the Advanced LLM Model AiCon. It's a predictive technology that is designed to make building applications faster and easier. Is there anything you need help with? |
+| ``processing_count`` | The number of times the question/command was processed by the AI model | 58 |
+
+
+<Check>Note: This code is using the super powerful AiCon V2 model from the WorqHat AI API, which is
+  famous
+  for
+  generating some seriously impressive text. However, it's important to use the API in a responsible
+  and ethical way, and be mindful of the model's limitations to avoid any misuse.</Check>
+
+## Let’s Start Building
+
+Now that you have learned how to use the WorqHat AI API, it's time to start building your own
+application. Today we will be building a simple AI Code Generator application using the WorqHat AI
+API. The application will generate code for you based on your requirements.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<CardGroup cols={2}>
+  <Card title="Get Started" icon="flag-checkered" iconType="duotone" color="#ea5a0c"
+        href="/learner-academy/about/welcome">
+  </Card>
+  <Card title="Join Discord Community" icon="discord" color="#5865F2"
+        href="https://discord.com/invite/KHh9mguKBx">
+  </Card>
+</CardGroup>
+
+#### Build Complex AI Solutions with ease using [**WorqHat AI**](https://worqhat.com/) Platform. Easy to Use APIs and Tools to build AI Solutions for your Projects.
+
+  - **+10** ready to use AI Models
+  - Utilise both **Generative** and **Analysis** Models
+  - Fully configurable through **APIs** and **UI**
+  - Leverages Advanced **Attention** and **Transformer** Models to deliver state of the art results
+  - Used by **+100** developers and companies
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/GA_vjXCfD5g"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## About WorqHat AI
+
+<CardGroup cols={2}>
+  <Card title="Continuously improving" icon="square-1" color="#ea5a0c">
+    Future-proof your language model technology by relying on a model that keeps improving over
+    time. A new version of our AI model is released every week with new features and improvements.
+  </Card>
+  <Card title="Trained on practical use cases" icon="square-2" color="#0285c7">
+    We especially train WorqHat AI on data that aids reliable business applications, like
+    summarization, copywriting, dialog, extraction, and question answering.
+  </Card>
+  <Card title="Optimized for business priorities" icon="square-3" color="#16a34a">
+    We are focused on Business Applications of AI. Our models are trained to be optimized on Multi
+    Cloud Architecture, Scalability, and Performance.
+  </Card>
+  <Card title="Top tier support" icon="square-4" color="#dc2626">
+    For many customers, language AI is new. WorqHat and its growing partner base is dedicated to
+    helping
+    you build solutions that find business value.
+  </Card>
+  <Card title="Deploy anywhere" icon="square-5" color="#EA899A">
+    For many customers, language AI is new. WorqHat and its growing partner base is dedicated to
+    helping
+    you build solutions that find business value.
+  </Card>
+  <Card title="Ease of customization" icon="square-6" color="#cac4b0">
+    Our language models are customizable for your unique use case, and can be easily integrated
+    with your applications. No scary ML experience needed.
+  </Card>
+</CardGroup>
+
+## About WorqHat Learner's Academy
+
++ **How do LLMs work?**
+> LLMs are trained on a large amount of text data. They learn to predict the next word in a
+sentence, given all the previous words. This is called language modeling. The better the language model, the better it can predict the next word. This is the basis of all LLMs. Learn about their architecture and their moving pieces, including transformer models, embeddings, similarity, and attention mechanisms.
+
++ **What are LLMs useful for?**
+> LLMs are useful for a variety of tasks, including text generation, summarization, question
+answering, and more. Learn about the different types of LLMs and how they can be used to solve
+different problems, including text generation, summarization, question answering, web based search
+and more
+
++ **How can I use LLMs to build and deploy my apps?**
+> Learn how to use LLMs to build applications. This course will teach you how to use WorqHat's
+AI Endpoints to build and deploy your applications.
+
+<CardGroup cols={2}>
+  <Card title="Get Started" icon="flag-checkered" iconType="duotone" color="#ea5a0c"
+        href="/learner-academy/about/welcome">
+    Get started with your AI Learning Journey
+  </Card>
+  <Card title="Join Discord Community" icon="discord" color="#5865F2"
+        href="https://discord.com/invite/KHh9mguKBx">
+    Join our Discord Community to get help and support
+  </Card>
+</CardGroup>
+
+## Benefits for Developers
+
++ **Vibrant Community**
+> Join and learn from a vibrant community of developers and companies building complex and
+amazing AI Solutions. You will get a chance to interact with them and learn from their
+experiences, and work on projects together.
+
++ **Learn from Experts**
+> Learn from experts who have built and deployed complex AI Solutions. You will get a chance to
+interact with them and learn from their experiences, and work on projects together. Also get a
+chance to interact with the WorqHat Team to learn about the latest developments in the AI space.
+
++ **Work on Real World Projects**
+> You will work on real world projects and learn how to build and deploy AI Solutions using
+WorqHat AI. You will also get a chance to work on projects from our partners.
+
++ **Get Certified**
+> You will learn how to build and deploy AI Solutions using WorqHat AI. On successful completion
+of every course, you will get a certificate, so you can showcase your skills to public. Wohoooo!!
+What's more, you might even get a chance to work with the team on a cool internship project.
+
+<CardGroup cols={2}>
+  <Card title="Get Started" icon="flag-checkered" iconType="duotone" color="#ea5a0c"
+        href="/learner-academy/about/welcome">
+    Get started with your AI Learning Journey
+  </Card>
+  <Card title="Join Discord Community" icon="discord" color="#5865F2"
+        href="https://discord.com/invite/KHh9mguKBx">
+    Join our Discord Community to connect with other developers
+  </Card>
+</CardGroup>
