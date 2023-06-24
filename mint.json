@@ -98,6 +98,18 @@
       ]
     },
     {
+      "group": "Learner Academy",
+      "pages": [
+        "learner-academy/introduction",
+        {
+          "group": "About LLM Academy",
+          "pages": [
+            "learner-academy/about/welcome"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Policies",
       "pages": [
         "policies/terms-of-service",
