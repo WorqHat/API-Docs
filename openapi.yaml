@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: WorqHat AI API Endpoints
+  description: API for interacting with WorqHat AI Services
+  version: 3.0.0
+servers:
+  - url: https://api.worqhat.com
+    description: Production server
+paths:
+  /authentication:
+    post:
+      summary: This endpoint is to check your API request and test if it is working by authenticating the user.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    OrgKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-key
+  schemas:
+    AuthenticationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the authentication process.
+        message:
+          type: string
+          description: A message regarding the authentication status.
+        organization_name:
+          type: string
+          description: The name of the authenticated organization.
+        user_name:
+          type: string
+          description: The name of the authenticated user.
+        user_email:
+          type: string
+          format: email
+          description: The email of the authenticated user.
+        timestamp:
+          type: integer
+          description: The timestamp when the authentication request was processed.
+        id:
+          type: string
+          description: The Request ID associated with the authentication process.
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
