@@ -44,6 +44,53 @@ paths:
       security:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
+  /api/ai/speech-text:
+    post:
+      summary: Our Speech Extraction API endpoint is used to extract text from audio files.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextConversionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
 
 components:
   securitySchemes:
@@ -56,6 +103,24 @@ components:
       in: header
       name: x-org-key
   schemas:
+    TextConversionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the conversion process.
+        status:
+          type: string
+          description: The status of the conversion process.
+        timestamp:
+          type: integer
+          description: The timestamp when the conversion request was processed.
+        content:
+          type: string
+          description: The converted text from the speech.
+        processing_count:
+          type: integer
+          description: The number of times the content has been processed to create the final content.
     AuthenticationResponse:
       type: object
       properties:
