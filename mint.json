@@ -98,6 +98,24 @@
       ]
     },
     {
+      "group": "Learner Academy",
+      "pages": [
+        "learner-academy/introduction",
+        {
+          "group": "About LLM Academy",
+          "pages": [
+            "learner-academy/about/welcome"
+          ]
+        },
+        {
+          "group": "Projects",
+          "pages": [
+            "learner-academy/projects/natural-language-code-translator-with-worqhat-ai"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Policies",
       "pages": [
         "policies/terms-of-service",

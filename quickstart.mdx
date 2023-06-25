@@ -87,22 +87,19 @@ hosted on `https://example.com`, you'll need to add `example.com` to the **Allow
 Here's an example of what the API key & ORG key looks like:
 
 
-<Tabs>
-  <Tab title="ORG Key">
-    ```bash API Key
-    var myHeaders = new Headers();
-    myHeaders.append("x-org-key",
-    "U2FsdGVkX1+DMFucNFhZT7b3KTDTPLvjKkfWV0XY+jK2tA44wGn+M+KTC1V/eAOX");
-    ```
-  </Tab>
-  <Tab title="API Key">
-    ```bash ORG Key
-    var myHeaders = new Headers();
-    myHeaders.append("x-api-key",
-    "U2FsdGVkX1/hx889OFajtqRp5TdESHHakovIb3Qq52kqqy/zFhA9MlNSjghXMUzbOHEr9QhoOAJKmKXKA6Ol8A==");
-    ```
-  </Tab>
-</Tabs>
+<CodeGroup>
+
+  ```bash API Key
+  var myHeaders = new Headers();
+  myHeaders.append("x-org-key",
+  "U2FsdGVkX1+DMFucNFhZT7b3KTDTPLvjKkfWV0XY+jK2tA44wGn+M+KTC1V/eAOX");
+  ```
+  ```bash ORG Key
+  var myHeaders = new Headers();
+  myHeaders.append("x-api-key",
+  "U2FsdGVkX1/hx889OFajtqRp5TdESHHakovIb3Qq52kqqy/zFhA9MlNSjghXMUzbOHEr9QhoOAJKmKXKA6Ol8A==");
+  ```
+</CodeGroup>
 
 <iframe
   width="560"
