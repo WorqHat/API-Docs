@@ -74,13 +74,56 @@
     {
       "group": "AI Models",
       "pages": [
-        "ai-models/Text-Generation-AI",
-        "ai-models/AI-for-Search",
-        "ai-models/Image-Generation",
-        "ai-models/Image-Analysis",
-        "ai-models/Text-Extraction",
-        "ai-models/Speech-Recognition",
-        "ai-models/Content-Moderation"
+        {
+          "group": "Text Generation AI",
+          "pages": [
+            "ai-models/text-generation-ai/aicon-v2-textgen",
+            "ai-models/text-generation-ai/aicon-v3-textgen",
+            "ai-models/text-generation-ai/aicon-v2-large-beta",
+            "ai-models/text-generation-ai/aicon-v2-2023-alpha"
+          ]
+        },
+        {
+          "group": "AI for Search",
+          "pages": [
+            "ai-models/ai-for-search/search-v2",
+            "ai-models/ai-for-search/search-v3"
+          ]
+        },
+        {
+          "group": "Image Generation",
+          "pages": [
+            "ai-models/image-generation/imagecon-v2",
+            "ai-models/image-generation/imagecon-v3",
+            "ai-models/image-generation/image-image-v2",
+            "ai-models/image-generation/image-image-v3",
+            "ai-models/image-generation/image-upscale"
+          ]
+        },
+        {
+          "group": "Image Analysis",
+          "pages": [
+            "ai-models/image-analysis/image-analysis-v2",
+            "ai-models/image-analysis/face-analysis",
+            "ai-models/image-analysis/face-comparison-v2"
+          ]
+        },
+        {
+          "group": "Text Extraction",
+          "pages": [
+            "ai-models/text-extraction/pdf-extraction",
+            "ai-models/text-extraction/web-extraction",
+            "ai-models/text-extraction/image-extraction"
+          ]
+        },
+        "ai-models/speech-extraction",
+        {
+          "group": "Content Moderation",
+          "pages": [
+            "ai-models/content-moderation/text-content-moderation",
+            "ai-models/content-moderation/image-moderation"
+          ]
+        }
       ]
     },
     {
