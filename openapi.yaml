@@ -22,25 +22,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error400Response'
         '401':
           description: Unauthorized - Invalid API Key or Organization Key
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error401Response'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error404Response'
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error500Response'
       security:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
@@ -69,29 +69,76 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error400Response'
         '401':
           description: Unauthorized - Invalid API Key or Organization Key
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error401Response'
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error404Response'
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/Error500Response'
       security:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
-
+  /api/ai/moderation:
+    post:
+      summary: Moderates text content.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_content:
+                  type: string
+              required:
+                - text_content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -103,6 +150,64 @@ components:
       in: header
       name: x-org-key
   schemas:
+    ModerationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the moderation request.
+        status:
+          type: string
+          description: The status of the moderation process.
+        timestamp:
+          type: integer
+          description: The timestamp when the moderation request was processed.
+        content:
+          type: object
+          properties:
+            sexual:
+              type: string
+              format: float
+              description: The score for sexual content moderation.
+            hate:
+              type: string
+              format: float
+              description: The score for hate speech content moderation.
+            violence:
+              type: string
+              format: float
+              description: The score for violence content moderation.
+            self-harm:
+              type: string
+              format: float
+              description: The score for self-harm content moderation.
+            "sexual/minors":
+              type: string
+              format: float
+              description: The score for sexual content involving minors moderation.
+            "hate/threatening":
+              type: string
+              format: float
+              description: The score for threatening hate speech content moderation.
+            "violence/graphic":
+              type: string
+              format: float
+              description: The score for graphic violence content moderation.
+          description: |
+            The object containing the moderation results for different categories.
+            The scores represent the likelihood of each category present in the content.
+      example:
+        id: "78f34ff3-08d5-4000-93f2-237ab46a3013"
+        status: "success"
+        timestamp: 1687729008633
+        content:
+          sexual: "5.2880e-7"
+          hate: "0.0000031912"
+          violence: "0.097897"
+          self-harm: "0.070380"
+          "sexual/minors": "4.9098e-7"
+          "hate/threatening": "2.4003e-8"
+          "violence/graphic": "0.0000020674"
     TextConversionResponse:
       type: object
       properties:
@@ -146,7 +251,7 @@ components:
         id:
           type: string
           description: The Request ID associated with the authentication process.
-    ErrorResponse:
+    Error400Response:
       type: object
       properties:
         status:
@@ -155,3 +260,46 @@ components:
         message:
           type: string
           description: A message describing the error.
+      example:
+        400:
+          status: "400"
+          message: "Bad Request"
+    Error401Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        401:
+          status: "401"
+          message: "Invalid API Key or Organization Key"
+    Error404Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        404:
+          status: "404"
+          message: "Not Found"
+    Error500Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        500:
+          status: "500"
+          message: "Internal Server Error"
