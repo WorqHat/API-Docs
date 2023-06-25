@@ -74,12 +74,13 @@
     {
       "group": "AI Models",
       "pages": [
-        "ai-models/AI-for-Content",
+        "ai-models/Text-Generation-AI",
         "ai-models/AI-for-Search",
-        "ai-models/AI-for-Images",
-        "ai-models/AI-for-Files",
-        "ai-models/AI-for-Speech",
-        "ai-models/AI-for-Security"
+        "ai-models/Image-Generation",
+        "ai-models/Image-Analysis",
+        "ai-models/Text-Extraction",
+        "ai-models/Speech-Recognition",
+        "ai-models/Content-Moderation"
       ]
     },
     {
