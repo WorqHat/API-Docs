@@ -906,6 +906,61 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/images/v2/face-detection:
+    post:
+      summary: Modify Image V2
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The image file for face detection
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaceDetectionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -917,6 +972,253 @@ components:
       in: header
       name: x-org-key
   schemas:
+    FaceDetectionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the face detection process.
+        status:
+          type: string
+          description: The status of the face detection process.
+        timestamp:
+          type: integer
+          description: The timestamp when the face detection request was processed.
+        analysed_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaceData'
+          description: The analyzed data of the detected faces in the image.
+        processing_count:
+          type: integer
+          description: The number of times the image has been processed for face detection.
+      example:
+        id: "abc123"
+        status: "completed"
+        timestamp: 1678923456
+        analysed_data:
+          - BoundingBox:
+              Width: 0.25
+              Height: 0.35
+              Left: 0.4
+              Top: 0.2
+            AgeRange:
+              Low: 25
+              High: 40
+            Smile:
+              Value: true
+              Confidence: 0.92
+            Eyeglasses:
+              Value: false
+              Confidence: 0.85
+            Sunglasses:
+              Value: false
+              Confidence: 0.95
+            Gender:
+              Value: "female"
+              Confidence: 0.98
+            Beard:
+              Value: false
+              Confidence: 0.89
+            Mustache:
+              Value: true
+              Confidence: 0.75
+            EyesOpen:
+              Value: true
+              Confidence: 0.96
+            MouthOpen:
+              Value: false
+              Confidence: 0.91
+            Emotions:
+              - Type: "happiness"
+                Confidence: 0.87
+              - Type: "sadness"
+                Confidence: 0.23
+            Landmarks:
+              - Type: "nose"
+                X: 0.55
+                Y: 0.32
+              - Type: "mouth"
+                X: 0.48
+                Y: 0.42
+            Pose:
+              Roll: -12.5
+              Yaw: 8.7
+              Pitch: -3.2
+            Quality:
+              Brightness: 0.85
+              Sharpness: 0.92
+            Confidence: 0.97
+        processing_count: 3
+
+
+    FaceData:
+      type: object
+      properties:
+        BoundingBox:
+          type: object
+          properties:
+            Width:
+              type: number
+              description: The width of the face bounding box as a fraction of the overall image width.
+            Height:
+              type: number
+              description: The height of the face bounding box as a fraction of the overall image height.
+            Left:
+              type: number
+              description: The left coordinate of the face bounding box as a fraction of the overall image width.
+            Top:
+              type: number
+              description: The top coordinate of the face bounding box as a fraction of the overall image height.
+        AgeRange:
+          type: object
+          properties:
+            Low:
+              type: integer
+              description: The estimated lower age of the detected person.
+            High:
+              type: integer
+              description: The estimated upper age of the detected person.
+        Smile:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person is smiling or not.
+            Confidence:
+              type: number
+              description: The confidence score of the smile detection.
+        Eyeglasses:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person is wearing eyeglasses or not.
+            Confidence:
+              type: number
+              description: The confidence score of the eyeglasses detection.
+        Sunglasses:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person is wearing sunglasses or not.
+            Confidence:
+              type: number
+              description: The confidence score of the sunglasses detection.
+        Gender:
+          type: object
+          properties:
+            Value:
+              type: string
+              description: The gender of the detected person.
+            Confidence:
+              type: number
+              description: The confidence score of the gender detection.
+        Beard:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person has a beard or not.
+            Confidence:
+              type: number
+              description: The confidence score of the beard detection.
+        Mustache:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person has a mustache or not.
+            Confidence:
+              type: number
+              description: The confidence score of the mustache detection.
+        EyesOpen:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person's eyes are open or not.
+            Confidence:
+              type: number
+              description: The confidence score of the eyes open detection.
+        MouthOpen:
+          type: object
+          properties:
+            Value:
+              type: boolean
+              description: Indicates whether the person's mouth is open or not.
+            Confidence:
+              type: number
+              description: The confidence score of the mouth open detection.
+        Emotions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Emotion'
+          description: The detected emotions and their confidence scores.
+        Landmarks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Landmark'
+          description: The facial landmarks and their positions on the face.
+        Pose:
+          type: object
+          properties:
+            Roll:
+              type: number
+              description: >
+                The roll angle of the detected face.
+                Positive values indicate clockwise rotation, while negative values indicate counterclockwise rotation.
+                The roll angle represents the amount of rotation around the vertical axis passing through the center of the face.
+            Yaw:
+              type: number
+              description: >
+                The yaw angle of the detected face.
+                Positive values indicate the face turning right, while negative values indicate the face turning left.
+                The yaw angle represents the amount of rotation around the vertical axis passing through the neck.
+            Pitch:
+              type: number
+              description: >
+                The pitch angle of the detected face.
+                Positive values indicate the face tilting upwards, while negative values indicate the face tilting downwards.
+                The pitch angle represents the amount of rotation around the horizontal axis passing through the center of the face.
+
+        Quality:
+          type: object
+          properties:
+            Brightness:
+              type: number
+              description: The brightness score of the detected face.
+            Sharpness:
+              type: number
+              description: The sharpness score of the detected face.
+        Confidence:
+          type: number
+          description: The confidence score of the face detection.
+
+    Emotion:
+      type: object
+      properties:
+        Type:
+          type: string
+          description: The type of emotion detected.
+        Confidence:
+          type: number
+          description: The confidence score of the emotion detection.
+
+    Landmark:
+      type: object
+      properties:
+        Type:
+          type: string
+          description: The type of facial landmark.
+        X:
+          type: number
+          description: The x-coordinate of the facial landmark as a fraction of the overall image width.
+        Y:
+          type: number
+          description: The y-coordinate of the facial landmark as a fraction of the overall image height.
+
     ImageModificationResponse:
       type: object
       properties:
@@ -943,7 +1245,6 @@ components:
         timestamp: 1687808116950
         content: "https://worqhat.s3.amazonaws.com/outputs/1687808088811.png"
         processing_count: 1
-
 
     ImageUpscaleResponse:
       type: object
