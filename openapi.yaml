@@ -197,6 +197,71 @@ paths:
       security:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
+
+  /api/ai/v2/web-extract:
+    post:
+      summary: Extract content from a web page.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url_path:
+                  type: string
+                  description: The URL of the web page to extract content from.
+                headline:
+                  type: boolean
+                  description: Flag indicating whether to extract headlines from the web page. (Optional)
+                inline_code:
+                  type: boolean
+                  description: Flag indicating whether to extract inline code snippets from the web page. (Optional)
+                code_blocks:
+                  type: boolean
+                  description: Flag indicating whether to extract code blocks from the web page. (Optional)
+                references:
+                  type: boolean
+                  description: Flag indicating whether to extract references from the web page. (Optional)
+                tables:
+                  type: boolean
+                  description: Flag indicating whether to extract tables from the web page. (Optional)
+              required:
+                - url_path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebExtractResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -208,6 +273,182 @@ components:
       in: header
       name: x-org-key
   schemas:
+    WebExtractResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the extraction process.
+        status:
+          type: string
+          description: The status of the extraction process.
+        timestamp:
+          type: integer
+          description: The timestamp when the extraction request was processed.
+        content:
+          type: object
+          properties:
+            text_content:
+              type: string
+              description: The extracted text content from the web page.
+            tags:
+              type: array
+              description: The extracted tags from the web page.
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the tag.
+                  value:
+                    type: string
+                    description: The value associated with the tag.
+                  data:
+                    type: object
+                    description: Additional data associated with the tag.
+        processing_count:
+          type: integer
+          description: The number of times the content has been processed to generate the final result.
+      example:
+        id: "77d4d87d-6e7e-4556-a4c2-aab535cfb5b4"
+        status: "success"
+        timestamp: 1683173445143
+        content:
+          text_content: |
+            WorqHat
+
+            🎉 Our Conversational Language Model WorqBot is now live for Beta use! Try out Now.🤖
+
+            Resources
+
+            APIs
+
+            Connect your app to WorqHat
+
+            Documentations
+
+            Learn how to use our products
+
+            Changelogs
+
+            Check what's new
+
+            Careers
+
+            Find your dream role
+
+            Community
+
+            Connect with other developers, designers, and entrepreneurs
+
+            Security
+
+            Our Security Principles and Practices
+
+            Blog
+
+            Interviews, tutorials, Updates and more
+
+            Status
+
+            Outage updates and announcements
+
+            Green Initiatives
+
+            Partnerships to make the World Greener
+
+            Contact Us
+
+
+
+            Enterprise WorqHat Playground
+
+            Join Waitlist
+
+            Careers
+            - Documentation
+            - Changelog
+            - Blogs
+            - Security
+
+            Subscribe to our newsletter
+
+            Stay up to date with the latest news and updates from WorqHat.
+
+
+            Join us!
+            - LinkedIn >
+            - Instagram
+            - Facebook
+            - Twitter
+            - GitHub
+
+            © 2023. Winlysis Pvt. Ltd., India All rights reserved.
+
+            - Terms & Conditions
+            - Privacy Policy
+            - Statu
+          tags:
+            - name: language
+              value: en
+              data: { }
+            - name: thumbnail
+              value: "/resources/WorqHat TM Logo.png"
+              data: { }
+            - name: current_date
+              value: "2023-01-01"
+              data: { }
+            - name: title
+              span:
+                - "0"
+                - "7"
+              span_text: WorqHat
+              value: WorqHat
+              data: { }
+            - name: link
+              span:
+                - "45"
+                - "52"
+              span_text: WorqBot
+              value: "//playground.worqhat.app/worqbot"
+              data: { }
+            - name: image
+              span:
+                - "94"
+                - "94"
+              value: "/resources/WorqHat TM Logo.png"
+              data:
+                alt: WorqHat Logo
+            - name: control
+              span:
+                - "94"
+                - "105"
+              span_text: " Resources "
+              value: " Resources "
+              data: { }
+            - name: subheading
+              span:
+                - "12016"
+                - "12042"
+              span_text: "Future-proof your business"
+              value: "Future-proof your business"
+              data: { }
+            - name: link
+              span:
+                - "12224"
+                - "12238"
+              span_text: "Join Waitlist "
+              value: "https://join.worqhat.com/waitlist"
+              data: { }
+            - name: image
+              span:
+                - "12295"
+                - "12295"
+              value: "/resources/integrations/logo-dropbox-40.svg"
+              data:
+                alt: Dropbox Icon
+        processing_count: 2152
+
     ImageModerationResponse:
       type: object
       properties:
