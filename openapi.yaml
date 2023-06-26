@@ -540,6 +540,164 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/images/generate/v2:
+    post:
+      summary: Create Images from Text V2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                height:
+                  type: number
+                  description: Height of the image to be generated. You can only choose between
+                    512 and 768. All other values will be ignored.
+                  enum:
+                    - 512
+                    - 768
+                width:
+                  type: number
+                  description: Width of the image to be generated. You can only choose between
+                    512 and 768. All other values will be ignored.
+                  enum:
+                    - 512
+                    - 768
+                prompt:
+                  type: array
+                  description: The prompt to be used to generate the image.
+                  items:
+                    type: string
+                image_style:
+                  type: string
+                  description: The image style to be used to generate the image.
+                output_type:
+                  type: string
+                  description: The output type of the image to be generated.
+                  enum:
+                    - url
+                    - blob
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+  /api/ai/images/generate/v3:
+    post:
+      summary: Create Images from Text V3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                height:
+                  type: number
+                  description: Height of the image to be generated. You can only choose between
+                    512 and 768. All other values will be ignored.
+                  enum:
+                    - 512
+                    - 768
+                width:
+                  type: number
+                  description: Width of the image to be generated. You can only choose between
+                    512 and 768. All other values will be ignored.
+                  enum:
+                    - 512
+                    - 768
+                prompt:
+                  type: array
+                  description: The prompt to be used to generate the image.
+                  items:
+                    type: string
+                image_style:
+                  type: string
+                  description: The image style to be used to generate the image.
+                output_type:
+                  type: string
+                  description: The output type of the image to be generated.
+                  enum:
+                    - url
+                    - blob
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -551,6 +709,35 @@ components:
       in: header
       name: x-org-key
   schemas:
+    ImageGenerationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the image generation process.
+        status:
+          type: string
+          description: The status of the image generation process.
+        timestamp:
+          type: integer
+          description: The timestamp when the image generation request was processed.
+        content:
+          oneOf:
+            - type: string
+              description: URL format
+            - type: string
+              description: Base64 format
+          description: The output of the image generation process.
+        processing_count:
+          type: integer
+          description: The number of times the image generation has been processed.
+      example:
+        id: "e24ecea4-df19-41ac-8261-1f9f4f241bfe"
+        status: "success"
+        timestamp: 1687805059532
+        content: "https://worqhat.s3.amazonaws.com/outputs/1687805044148.png"
+        processing_count: 1
+
     AIContentV2Response:
       type: object
       properties:
