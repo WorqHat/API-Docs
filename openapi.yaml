@@ -3,9 +3,11 @@ info:
   title: WorqHat AI API Endpoints
   description: API for interacting with WorqHat AI Services
   version: 3.0.0
+
 servers:
   - url: https://api.worqhat.com
     description: Production server
+
 paths:
   /authentication:
     post:
@@ -262,6 +264,55 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/v2/pdf-extract:
+    post:
+      summary: Extract text or structured data from a PDF file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PDFExtractRequest"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PDFExtractResponse"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -273,6 +324,149 @@ components:
       in: header
       name: x-org-key
   schemas:
+    PDFExtractRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+          description: The PDF file to extract content from.
+        output_format:
+          type: string
+          enum:
+            - text
+            - json
+          default: text
+          description: The desired output format. Defaults to "text".
+      required:
+        - file
+      example:
+        file: [ PDF binary data ]
+        output_format: text
+
+    PDFExtractResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the extraction process.
+        status:
+          type: string
+          description: The status of the extraction process.
+        timestamp:
+          type: integer
+          description: The timestamp when the extraction request was processed.
+        content:
+          oneOf:
+            - $ref: "#/components/schemas/PdfTextExtractContent"
+            - $ref: "#/components/schemas/PdfJsonExtractContent"
+          description: The extracted content from the PDF.
+        processing_count:
+          type: integer
+          description: The number of times the content has been processed to create the final content.
+
+    PdfTextExtractContent:
+      type: object
+      properties:
+        text_content:
+          type: string
+          description: The extracted text content from the PDF.
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/PdfTag"
+          description: Additional tags associated with the extracted content.
+
+    PdfJsonExtractContent:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: "#/components/schemas/PdfStructuredData"
+      description: The extracted structured data from the PDF.
+
+    PdfTag:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tag.
+        value:
+          type: string
+          description: The value associated with the tag.
+        data:
+          type: object
+          additionalProperties: true
+          description: Additional data associated with the tag.
+
+    PdfStructuredData:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of the extracted element.
+        position:
+          type: object
+          properties:
+            BoundingBox:
+              $ref: "#/components/schemas/PdfBoundingBox"
+            Polygon:
+              type: array
+              items:
+                $ref: "#/components/schemas/PdfPoint"
+          description: The position of the extracted element.
+        id:
+          type: string
+          description: The unique identifier associated with the extracted element.
+        dependencies:
+          type: array
+          items:
+            $ref: "#/components/schemas/PdfDependency"
+          description: Dependencies of the extracted element.
+        score:
+          type: number
+          description: The score or confidence level of the extracted element.
+        content:
+          type: string
+          description: The extracted content of the element.
+
+    PdfBoundingBox:
+      type: object
+      properties:
+        Width:
+          type: number
+          description: The width of the bounding box.
+        Height:
+          type: number
+          description: The height of the bounding box.
+        Left:
+          type: number
+          description: The left coordinate of the bounding box.
+        Top:
+          type: number
+          description: The top coordinate of the bounding box.
+
+    PdfPoint:
+      type: object
+      properties:
+        X:
+          type: number
+          description: The X coordinate of the point.
+        Y:
+          type: number
+          description: The Y coordinate of the point.
+
+    PdfDependency:
+      type: object
+      properties:
+        Type:
+          type: string
+          description: The type of dependency.
+        Ids:
+          type: array
+          items:
+            type: string
+          description: The unique identifiers of the dependent elements.
     WebExtractResponse:
       type: object
       properties:
