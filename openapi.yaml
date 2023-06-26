@@ -386,6 +386,160 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/content/v2:
+    post:
+      summary: Get AI Content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  description: The question you want to ask the AI.
+                preserve_history:
+                  type: boolean
+                  description: Whether you want to preserve the history of the conversation or not.
+                history_object:
+                  type: object
+                  description: The history object that you want to pass to the model. This is
+                    only required if preserve_history is set to true. Pass the Questions and
+                    Answers as Key Value Pairs to help the model understand.
+                  example:
+                    "Hi, who are you?": "My name is WorqBot, nice to meet you!"
+                    "How can you help me?": "I can assist you with various tasks and provide information on a wide range of topics."
+                training_data:
+                  type: string
+                  description: The training data you want to pass to the AI.
+                randomness:
+                  type: number
+                  minimum: 0.0
+                  maximum: 1.0
+                  description: The randomness factor that you want to pass to the model. This is
+                    only required if you want to set the randomness factor. Default is 0.4. You can
+                    set it to 0.0 to disable randomness and set it to 1.0 to enable maximum
+                    randomness. We recommend setting it to anything between 0.0 and 0.5 for best
+                    results.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIContentV2Response"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+  /api/ai/content/v3:
+    post:
+      summary: Get AI Content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  description: The question you want to ask the AI.
+                preserve_history:
+                  type: boolean
+                  description: Whether you want to preserve the history of the conversation or not.
+                history_object:
+                  type: object
+                  description: The history object that you want to pass to the model. This is
+                    only required if preserve_history is set to true. Pass the Questions and
+                    Answers as Key Value Pairs to help the model understand.
+                  example:
+                    "Hi, who are you?": "My name is WorqBot, nice to meet you!"
+                    "How can you help me?": "I can assist you with various tasks and provide information on a wide range of topics."
+                training_data:
+                  type: string
+                  description: The training data you want to pass to the AI.
+                randomness:
+                  type: number
+                  minimum: 0.0
+                  maximum: 1.0
+                  description: The randomness factor that you want to pass to the model. This is
+                    only required if you want to set the randomness factor. Default is 0.4. You can
+                    set it to 0.0 to disable randomness and set it to 1.0 to enable maximum
+                    randomness. We recommend setting it to anything between 0.0 and 0.5 for best
+                    results.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIContentV3Response"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -397,6 +551,56 @@ components:
       in: header
       name: x-org-key
   schemas:
+    AIContentV2Response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the response.
+        status:
+          type: string
+          description: The status of the response.
+        timestamp:
+          type: integer
+          description: The timestamp when the response was generated.
+        content:
+          type: string
+          description: The content of the response.
+        processing_count:
+          type: integer
+          description: The number of times the response has been processed.
+      example:
+        id: "1468dd39-aa8a-495e-9b87-7cf474cdf352"
+        status: success
+        timestamp: 1687798163795
+        content: "Hello! I'm an AI, so I don't have feelings, but I'm here and ready to assist you. How can I help you today?"
+        processing_count: 93
+
+    AIContentV3Response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the response.
+        status:
+          type: string
+          description: The status of the response.
+        timestamp:
+          type: integer
+          description: The timestamp when the response was generated.
+        content:
+          type: string
+          description: The content of the response.
+        processing_count:
+          type: integer
+          description: The number of times the response has been processed.
+      example:
+        id: "1468dd39-aa8a-495e-9b87-7cf474cdf352"
+        status: success
+        timestamp: 1687798163795
+        content: "Hello! I'm an AI, so I don't have feelings, but I'm here and ready to assist you. How can I help you today?"
+        processing_count: 93
+
     ImageDetectedText:
       type: object
       properties:
@@ -560,8 +764,58 @@ components:
           type: integer
           description: The number of times the content has been processed to create the final content.
       example:
-        example1:
-        example2:
+        value:
+          id: "15b01f2c-125c-4824-9b89-9b140be9e7f0"
+          status: success
+          timestamp: 1687776023750
+          content:
+            0:
+              - type: PAGE
+                position:
+                  BoundingBox:
+                    Width: 1
+                    Height: 1
+                    Left: 0
+                    Top: 0
+                  Polygon:
+                    - X: 0.000002764723831205629
+                      Y: 0
+                    - X: 1
+                      Y: 0.000004283267116989009
+                    - X: 1
+                      Y: 1
+                    - X: 0
+                      Y: 1
+                id: "d0d1ac22-3958-45ed-8bc6-c76eb637f5cc"
+                dependencies:
+                  - Type: CHILD
+                    Ids:
+                      - "720f5d2c-c59d-4648-9722-0d6f7de4cbe3"
+                      - "bf135402-4ff0-4ae7-8c72-a0cec3559a91"
+              - type: LINE
+                position:
+                  BoundingBox:
+                    Width: 0.6681150794029236
+                    Height: 0.014788508415222168
+                    Left: 0.15100932121276855
+                    Top: 0.08366494625806808
+                  Polygon:
+                    - X: 0.15103518962860107
+                      Y: 0.08366494625806808
+                    - X: 0.8191244006156921
+                      Y: 0.08457615226507187
+                    - X: 0.8191033601760864
+                      Y: 0.09845345467329025
+                    - X: 0.15100932121276855
+                      Y: 0.09754297882318497
+                score: 80.1580581665039
+                id: "720f5d2c-c59d-4648-9722-0d6f7de4cbe3"
+                dependencies:
+                  - Type: CHILD
+                    Ids:
+                      - "3723328f-8b27-4b6f-8c98-d79bb6ffde62"
+                      - "e73f4be1-e8f3-464a-8647-56a281facd0c"
+                content: "Est et lorem vero dolor gubergren lorem. Dolor ut conseletur labore amet et dolor sed erat"
 
     PdfTextExtractContent:
       type: object
