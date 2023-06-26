@@ -698,6 +698,76 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/images/upscale/v3:
+    post:
+      summary: Upscale Image Processes V3
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                baseFile:
+                  type: string
+                  format: binary
+                  description: The file object of the image you want to upscale.
+                scale:
+                  type: number
+                  description: The scale to which you want to upscale the image. The default value is 2.
+                  default: 2
+                output_type:
+                  type: string
+                  description: The output type of the image. Choose from URL or blob. The default value is URL.
+                  enum:
+                    - URL
+                    - blob
+                  default: URL
+              required:
+                - baseFile
+                - scale
+                - output_type
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageUpscaleResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -709,6 +779,33 @@ components:
       in: header
       name: x-org-key
   schemas:
+    ImageUpscaleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the image upscale process.
+        status:
+          type: string
+          description: The status of the image upscale process.
+        timestamp:
+          type: integer
+          description: The timestamp when the image upscale request was processed.
+        content:
+          oneOf:
+            - type: string
+            - type: object
+          description: The output URL or blob of the upscaled image.
+        processing_count:
+          type: integer
+          description: The number of times the image has been processed to come to the desired output.
+      example:
+        id: "80d94394-c1dc-41d6-a73e-9ff1ba5c9741"
+        status: "success"
+        timestamp: 1687808116950
+        content: "https://worqhat.s3.amazonaws.com/outputs/1687808088811.png"
+        processing_count: 1
+
     ImageGenerationResponse:
       type: object
       properties:
@@ -730,7 +827,7 @@ components:
           description: The output of the image generation process.
         processing_count:
           type: integer
-          description: The number of times the image generation has been processed.
+          description: The number of times the image has been processed to generate the output.
       example:
         id: "e24ecea4-df19-41ac-8261-1f9f4f241bfe"
         status: "success"
