@@ -313,6 +313,79 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/images/v2/image-text-detection:
+    post:
+      summary: Perform text detection and bounding on an image.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the response
+                  status:
+                    type: string
+                    description: The status of the response
+                  timestamp:
+                    type: integer
+                    description: The timestamp of the response
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ImageDetectedText'
+                    description: The detected text content
+                  processing_count:
+                    type: integer
+                    description: The number of images processed
+
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -324,6 +397,128 @@ components:
       in: header
       name: x-org-key
   schemas:
+    ImageDetectedText:
+      type: object
+      properties:
+        Confidence:
+          type: number
+          description: The confidence level of the detected text
+        DetectedText:
+          type: string
+          description: The detected text
+        Geometry:
+          $ref: '#/components/schemas/ImageTextGeometry'
+        Id:
+          type: integer
+          description: The ID of the detected text
+        ParentId:
+          type: integer
+          description: The ID of the parent text (if applicable)
+        Type:
+          type: string
+          description: The type of the detected text
+      example:
+        'application/json':
+          - id: "0d43b414-2a7a-425f-9f2d-4bd8d07a164d"
+            status: success
+            timestamp: 1683408470311
+            content:
+              - Confidence: 90.54900360107422
+                DetectedText: "IT'S"
+                Geometry:
+                  BoundingBox:
+                    Height: 0.10317354649305344
+                    Left: 0.6677391529083252
+                    Top: 0.17569075524806976
+                    Width: 0.15113449096679688
+                  Polygon:
+                    - X: 0.6677391529083252
+                      Y: 0.17569075524806976
+                    - X: 0.8188736438751221
+                      Y: 0.17574213445186615
+                    - X: 0.8188582062721252
+                      Y: 0.278915673494339
+                    - X: 0.6677237153053284
+                      Y: 0.2788642942905426
+                Id: 0
+                Type: LINE
+              - Confidence: 59.411651611328125
+                DetectedText: "I"
+                Geometry:
+                  BoundingBox:
+                    Height: 0.05955825746059418
+                    Left: 0.2763049304485321
+                    Top: 0.394121915102005
+                    Width: 0.026684552431106567
+                  Polygon:
+                    - X: 0.2763049304485321
+                      Y: 0.394121915102005
+                    - X: 0.30298948287963867
+                      Y: 0.3932435214519501
+                    - X: 0.30385109782218933
+                      Y: 0.45280176401138306
+                    - X: 0.27716654539108276
+                      Y: 0.453680157661438
+                Id: 1
+                Type: LINE
+              - Confidence: 92.76634979248047
+                DetectedText: "MONDAY"
+                Geometry:
+                  BoundingBox:
+                    Height: 0.15580485785007477
+                    Left: 0.30405032682418823
+                    Top: 0.15534435284137726
+                    Width: 0.26672941493988037
+                  Polygon:
+                    - X: 0.30405032682418823
+                      Y: 0.15534435284137726
+                    - X: 0.5707797403335571
+                      Y: 0.15536674892997742
+                    - X: 0.5707595348358154
+                      Y: 0.3111492099761963
+                    - X: 0.3040300908088684
+                      Y: 0.3111268138885498
+                Id: 2
+                Type: LINE
+            processing_count: 1
+
+    ImageTextGeometry:
+      type: object
+      properties:
+        BoundingBox:
+          $ref: '#/components/schemas/ImageTextBoundingBox'
+        Polygon:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageTextPoint'
+          description: The polygon coordinates of the geometry
+
+    ImageTextBoundingBox:
+      type: object
+      properties:
+        Height:
+          type: number
+          description: The height of the bounding box
+        Left:
+          type: number
+          description: The left coordinate of the bounding box
+        Top:
+          type: number
+          description: The top coordinate of the bounding box
+        Width:
+          type: number
+          description: The width of the bounding box
+
+    ImageTextPoint:
+      type: object
+      properties:
+        X:
+          type: number
+          description: The X coordinate of the point
+        Y:
+          type: number
+          description: The Y coordinate of the point
+
     PDFExtractRequest:
       type: object
       properties:
@@ -364,6 +559,9 @@ components:
         processing_count:
           type: integer
           description: The number of times the content has been processed to create the final content.
+      example:
+        example1:
+        example2:
 
     PdfTextExtractContent:
       type: object
@@ -467,6 +665,7 @@ components:
           items:
             type: string
           description: The unique identifiers of the dependent elements.
+
     WebExtractResponse:
       type: object
       properties:
