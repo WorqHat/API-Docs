@@ -1,0 +1,440 @@
+openapi: 3.0.3
+info:
+  title: WorqHat AI API Endpoints
+  description: API for interacting with WorqHat AI Services
+  version: 3.0.0
+servers:
+  - url: https://api.worqhat.com
+    description: Production server
+paths:
+  /authentication:
+    post:
+      summary: This endpoint is to check your API request and test if it is working by authenticating the user.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+  /api/ai/speech-text:
+    post:
+      summary: Our Speech Extraction API endpoint is used to extract text from audio files.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextConversionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+  /api/ai/moderation:
+    post:
+      summary: Moderates text content.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text_content:
+                  type: string
+              required:
+                - text_content
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
+  /api/ai/images/v2/image-moderation:
+    post:
+      summary: Moderates text content.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+              required:
+                - image
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageModerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    OrgKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-key
+  schemas:
+    ImageModerationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the moderation analysis process.
+        status:
+          type: string
+          description: The status of the moderation analysis process.
+        timestamp:
+          type: integer
+          description: The timestamp when the moderation analysis request was processed.
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageModerationCategory'
+        processing_count:
+          type: integer
+          description: The number of times the content has been processed to generate the final analysis results.
+      example:
+        id: "0dfefbaf-41e6-43ae-83d1-c9751e3fe561"
+        status: "success"
+        timestamp: 1687754028548
+        content:
+          - Confidence: 96.70862579345703
+            Name: "Female Swimwear Or Underwear"
+            ParentName: "Suggestive"
+          - Confidence: 96.70862579345703
+            Name: "Suggestive"
+            ParentName: ""
+          - Confidence: 96.14669036865234
+            Name: "Revealing Clothes"
+            ParentName: "Suggestive"
+        processing_count: 1
+
+    ImageModerationCategory:
+      type: object
+      properties:
+        Confidence:
+          type: number
+          description: The confidence level of the moderation analysis result.
+        Name:
+          type: string
+          description: The name of the moderation category.
+        ParentName:
+          type: string
+          description: The parent category of the moderation category.
+
+    ModerationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the moderation request.
+        status:
+          type: string
+          description: The status of the moderation process.
+        timestamp:
+          type: integer
+          description: The timestamp when the moderation request was processed.
+        content:
+          type: object
+          properties:
+            sexual:
+              type: string
+              format: float
+              description: The score for sexual content moderation.
+            hate:
+              type: string
+              format: float
+              description: The score for hate speech content moderation.
+            violence:
+              type: string
+              format: float
+              description: The score for violence content moderation.
+            self-harm:
+              type: string
+              format: float
+              description: The score for self-harm content moderation.
+            "sexual/minors":
+              type: string
+              format: float
+              description: The score for sexual content involving minors moderation.
+            "hate/threatening":
+              type: string
+              format: float
+              description: The score for threatening hate speech content moderation.
+            "violence/graphic":
+              type: string
+              format: float
+              description: The score for graphic violence content moderation.
+          description: |
+            The object containing the moderation results for different categories.
+            The scores represent the likelihood of each category present in the content.
+      example:
+        id: "78f34ff3-08d5-4000-93f2-237ab46a3013"
+        status: "success"
+        timestamp: 1687729008633
+        content:
+          sexual: "5.2880e-7"
+          hate: "0.0000031912"
+          violence: "0.097897"
+          self-harm: "0.070380"
+          "sexual/minors": "4.9098e-7"
+          "hate/threatening": "2.4003e-8"
+          "violence/graphic": "0.0000020674"
+
+    TextConversionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier associated with the conversion process.
+        status:
+          type: string
+          description: The status of the conversion process.
+        timestamp:
+          type: integer
+          description: The timestamp when the conversion request was processed.
+        content:
+          type: string
+          description: The converted text from the speech.
+        processing_count:
+          type: integer
+          description: The number of times the content has been processed to create the final content.
+      example:
+        id: "d94612c2-e572-479b-894e-8254705c2983"
+        status: "success"
+        timestamp: 1683211582017
+        content: "I have a silky smooth voice, and today I will tell you about the exercise regimen of the common sloth."
+        processing_count: 20
+
+    AuthenticationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the authentication process.
+        message:
+          type: string
+          description: A message regarding the authentication status.
+        organization_name:
+          type: string
+          description: The name of the authenticated organization.
+        user_name:
+          type: string
+          description: The name of the authenticated user.
+        user_email:
+          type: string
+          format: email
+          description: The email of the authenticated user.
+        timestamp:
+          type: integer
+          description: The timestamp when the authentication request was processed.
+        id:
+          type: string
+          description: The Request ID associated with the authentication process.
+      example:
+        status: "success"
+        message: "User Authenticated Successfully"
+        organization_name: "Sample Organization Inc."
+        user_name: "John Doe"
+        user_email: "john@worqhat.com"
+        timestamp: 1687753142003
+        id: "a1146b58-a6fd-46a1-944c-3b1aad50d14b"
+
+    Error400Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        status: "400"
+        message: "Bad Request"
+
+    Error401Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        status: "401"
+        message: "Invalid API Key or Organization Key"
+
+    Error406Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        status: "406"
+        message: "Unable to process the request."
+
+    Error404Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        status: "404"
+        message: "Not Found"
+
+    Error500Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status code indicating the error.
+        message:
+          type: string
+          description: A message describing the error.
+      example:
+        status: "500"
+        message: "Internal Server Error"
