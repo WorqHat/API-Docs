@@ -5,7 +5,7 @@
     "dark": "/logo/worqHat-logo.png",
     "light": "/logo/worqHat-logo.png"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/android-chrome-512x512.png",
   "colors": {
     "primary": "#12A7D3",
     "light": "#81D7F7",
@@ -136,14 +136,20 @@
             "api-reference/text-generation-ai/aicon-v2-textgen",
             "api-reference/text-generation-ai/aicon-v3-textgen",
             "api-reference/text-generation-ai/aicon-v2-large-beta",
-            "api-reference/text-generation-ai/aicon-v2-2023-alpha"
+            "api-reference/text-generation-ai/aicon-v2-2023-alpha",
+            "api-reference/text-generation-ai/aicon-train-datasets",
+            "api-reference/text-generation-ai/aicon-view-datasets",
+            "api-reference/text-generation-ai/aicon-delete-datasets"
           ]
         },
         {
           "group": "AI for Search",
           "pages": [
             "api-reference/ai-for-search/search-v2",
-            "api-reference/ai-for-search/search-v3"
+            "api-reference/ai-for-search/search-v3",
+            "api-reference/ai-for-search/search-train-datasets",
+            "api-reference/ai-for-search/search-view-datasets",
+            "api-reference/ai-for-search/search-delete-datasets"
           ]
         },
         {
