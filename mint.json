@@ -218,5 +218,8 @@
     "linkedin": "https://www.linkedin.com/company/worqhat"
   },
   "backgroundImage": "/images/gradient.png",
-  "openapi": "/openapi.yaml"
+  "openapi": "/openapi.yaml",
+  "integrations": {
+    "intercom": "or2gpwjd"
+  }
 }
