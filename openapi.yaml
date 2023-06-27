@@ -1014,6 +1014,65 @@ paths:
         - ApiKeyAuth: [ ]
           OrgKeyAuth: [ ]
 
+  /api/ai/images/v2/facial-comparison:
+    post:
+      summary: Perform facial comparison
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                source_image:
+                  type: string
+                  format: binary
+                  description: The source image for comparison
+                target_image:
+                  type: string
+                  format: binary
+                  description: The target image for comparison
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageComparisonResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400Response'
+        '401':
+          description: Unauthorized - Invalid API Key or Organization Key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401Response'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404Response'
+        '406':
+          description: Not Acceptable - Invalid Content Type or Content not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406Response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500Response'
+      security:
+        - ApiKeyAuth: [ ]
+          OrgKeyAuth: [ ]
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1025,6 +1084,86 @@ components:
       in: header
       name: x-org-key
   schemas:
+    ImageComparisonResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "3497939b-9e7b-442c-ae00-cb75cc02a64d"
+        status:
+          type: string
+          example: "success"
+        timestamp:
+          type: integer
+          example: 1687857228707
+        content:
+          type: object
+          properties:
+            matched_faces_count:
+              type: integer
+              example: 1
+            unmatched_faces_count:
+              type: integer
+              example: 1
+            matched_faces:
+              type: array
+              items:
+                $ref: "#/components/schemas/MatchedFace"
+              example:
+                - similarity: 98.82299041748047
+                  quality:
+                    brightness: 88.67324829101562
+                    sharpness: 16.49492073059082
+                  confidence: 99.98194885253906
+            unmatched_faces:
+              type: array
+              items:
+                $ref: "#/components/schemas/UnmatchedFace"
+              example:
+                - confidence: 99.99944305419922
+                  quality:
+                    brightness: 89.44940185546875
+                    sharpness: 83.14741516113281
+        processing_count:
+          type: integer
+          example: 1
+
+    MatchedFace:
+      type: object
+      properties:
+        similarity:
+          type: number
+          format: float
+          example: 98.82299041748047
+        quality:
+          $ref: "#/components/schemas/FaceQuality"
+        confidence:
+          type: number
+          format: float
+          example: 99.98194885253906
+
+    UnmatchedFace:
+      type: object
+      properties:
+        confidence:
+          type: number
+          format: float
+          example: 99.99944305419922
+        quality:
+          $ref: "#/components/schemas/FaceQuality"
+
+    FaceQuality:
+      type: object
+      properties:
+        brightness:
+          type: number
+          format: float
+          example: 88.67324829101562
+        sharpness:
+          type: number
+          format: float
+          example: 16.49492073059082
+
     ImageAnalysisResponse:
       type: object
       properties:
